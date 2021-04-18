@@ -22,13 +22,13 @@ app = FastAPI(
     openapi_url=f"{BASE_PATH}/openapi.json",
 )
 
-app.include_router(candles_router, prefix=BASE_PATH)
+app.include_router(candles_router, prefix=f"{BASE_PATH}/v1")
 
 
 @app.middleware("http")
 async def check_auth(request: Request, call_next: Callable):
     if CHECK_AUTH_TOKEN and not b64decode(request.headers.get("X-Auth-Token", "").encode()).decode() == AUTH_TOKEN:
-        raise HTTPException(HTTP_401_UNAUTHORIZED, {"message": "User not authorized!"})
+        raise HTTPException(HTTP_401_UNAUTHORIZED, {"message": "Invalid access token!"})
 
     return await call_next(request)
 
