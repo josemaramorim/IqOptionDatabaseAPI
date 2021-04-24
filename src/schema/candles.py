@@ -6,10 +6,10 @@ from starlette.exceptions import HTTPException
 from starlette.status import HTTP_400_BAD_REQUEST
 
 
-class GetCandleInput(BaseModel):
+class PostCandleInput(BaseModel):
     start_datetime: datetime
     end_datetime: datetime
-    pairs: List[str] = []
+    pairs: List[str]
     timeframe: int
     otc: bool = False
 
@@ -21,7 +21,7 @@ class GetCandleInput(BaseModel):
         return timeframe
 
 
-class PostCandleInput(BaseModel):
+class PutCandleInput(BaseModel):
     id: int
     from_: int
     at: int

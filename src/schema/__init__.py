@@ -1,3 +1,3 @@
-from src.schema.candles import CandleOutput, GetCandleInput, PostCandleInput
+from src.schema.candles import CandleOutput, PostCandleInput, PutCandleInput
 
-__all__ = ("PostCandleInput", "GetCandleInput", "CandleOutput")
+__all__ = ("PostCandleInput", "PutCandleInput", "CandleOutput")
