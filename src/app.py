@@ -4,15 +4,13 @@ from typing import Callable
 import uvicorn
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.exceptions import RequestValidationError
-from starlette.responses import UJSONResponse
+from fastapi.responses import UJSONResponse
 from starlette.status import HTTP_401_UNAUTHORIZED, HTTP_422_UNPROCESSABLE_ENTITY, HTTP_500_INTERNAL_SERVER_ERROR
 
 from src import __version__
-from src.database.migration.upgrade import upgrade
 from src.routers import candles_router
 from src.settings import AUTH_TOKEN, BASE_PATH, CHECK_AUTH_TOKEN, DEBUG, HOST, PORT, WORKERS
 
-upgrade()
 app = FastAPI(
     title="IqOption - Database",
     version=__version__,
@@ -22,7 +20,7 @@ app = FastAPI(
     openapi_url=f"{BASE_PATH}/openapi.json",
 )
 
-app.include_router(candles_router, prefix=f"{BASE_PATH}/v1")
+app.include_router(candles_router, prefix=f"{BASE_PATH}/v1/candles")
 
 
 @app.middleware("http")

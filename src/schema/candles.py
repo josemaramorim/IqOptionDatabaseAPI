@@ -1,12 +1,25 @@
 from datetime import datetime
-from typing import Dict, List
+from typing import List
 
 from pydantic import BaseModel, validator
 from starlette.exceptions import HTTPException
 from starlette.status import HTTP_400_BAD_REQUEST
 
 
-class PostCandleInput(BaseModel):
+class BaseCandle(BaseModel):
+    id: int
+    at: int
+    from_: int
+    to: int
+    open: float
+    close: float
+    min: float
+    max: float
+    pair: str
+    timeframe: int
+
+
+class CandleGetModel(BaseModel):
     start_datetime: datetime
     end_datetime: datetime
     pairs: List[str]
@@ -21,30 +34,14 @@ class PostCandleInput(BaseModel):
         return timeframe
 
 
-class PutCandleInput(BaseModel):
-    id: int
-    from_: int
-    at: int
-    to: int
-    open: float
-    close: float
-    min: float
-    max: float
-    pair: str
-    timeframe: int
+class CandleCreateModel(BaseCandle):
+    pass
 
 
-class CandleOutput(BaseModel):
-    id: int
-    at: int
-    from_: int
-    to: int
-    open: float
-    close: float
-    min: float
-    max: float
-    pair: str
-    timeframe: int
+class CandleModel(BaseCandle):
+    class Config:
+        orm_mode = True
 
-    def dict(self, *args, **kwargs) -> Dict:
-        return {key.strip("_"): value for key, value in super().dict(*args, **kwargs).items()}
+    @classmethod
+    def alias_generator(cls, string: str) -> str:
+        return string.strip("_")
