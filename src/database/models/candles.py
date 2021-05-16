@@ -6,7 +6,7 @@ from sqlalchemy.orm.session import Session
 from sqlalchemy.sql.sqltypes import BigInteger, Float, Integer, String
 
 from src.database.models import BaseModel
-from src.schema.candles import PutCandleInput
+from src.schema.candles import CandleCreateModel
 
 TCandle = Type["Candle"]
 
@@ -78,7 +78,7 @@ class Candle(BaseModel):
         )
 
     @staticmethod
-    def create_from_schema(schema: PutCandleInput) -> TCandle:
+    def create_from_schema(schema: CandleCreateModel) -> TCandle:
         return Candle(
             candle_id=f"{schema.timeframe}-{schema.pair}-{schema.id}",
             timeframe=schema.timeframe,

@@ -1,8 +1,4 @@
-import os
-
 from decouple import config
-
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 WORKERS = config("WORKERS", default=4, cast=int)
 HOST = config("HOST")
