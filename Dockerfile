@@ -2,7 +2,7 @@ FROM python:3.8-slim-buster
 
 WORKDIR /srv
 
-RUN apt update && apt upgrade -y
+RUN apt update && apt upgrade -y && apt install make
 
 RUN cp /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime && \
     echo "America/Sao_Paulo" > /etc/timezone
@@ -19,4 +19,4 @@ ADD . .
 EXPOSE 80
 
 # ENTRYPOINT
-ENTRYPOINT ["gunicorn", "src.app:app", "-c", "./src/gunicorn.py"]
+ENTRYPOINT ["make", "upgrade", "run"]
